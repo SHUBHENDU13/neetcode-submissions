@@ -1,0 +1,22 @@
+class Solution:
+    def trap(self, height: List[int]) -> int:
+        n = len(height)
+        if n == 0:
+            return 0
+
+        maxLeft, maxRight = [0] * n, [0] * n
+
+        maxLeft[0], maxRight[n-1] = height[0], height[n-1]
+
+        for i in range(1, n):
+            maxLeft[i] = max(maxLeft[i-1], height[i])
+
+        for i in range(n-2, -1, -1):
+            maxRight[i] = max(maxRight[i+1], height[i])
+
+        res = 0
+
+        for i in range(n):
+            res += min(maxLeft[i], maxRight[i]) - height[i]
+
+        return res
